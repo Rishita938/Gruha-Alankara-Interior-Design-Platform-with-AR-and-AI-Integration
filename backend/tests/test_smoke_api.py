@@ -1,9 +1,13 @@
 import os
+import sys
+from pathlib import Path
 
 from fastapi.testclient import TestClient
 
 os.environ.setdefault("AI_PROVIDER", "local")
 
+# Ensure backend module imports are stable across different pytest working directories.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from main import app
 
 

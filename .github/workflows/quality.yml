@@ -7,6 +7,9 @@ on:
 jobs:
   backend-checks:
     runs-on: ubuntu-latest
+    env:
+      AI_PROVIDER: local
+      PYTHONPATH: ${{ github.workspace }}/backend
     defaults:
       run:
         working-directory: backend
@@ -20,12 +23,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run milestone validator
-        env:
-          AI_PROVIDER: local
         run: python scripts/validate_milestones.py
       - name: Run smoke tests
-        env:
-          AI_PROVIDER: local
         run: pytest tests/test_smoke_api.py -q
 
   frontend-build:
